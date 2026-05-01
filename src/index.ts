@@ -1,14 +1,15 @@
-import express from "express";
+import express from 'express';
+
 
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 
-app.get('/', (req,res) => {
-    res.send('Hello, welcome to the Classroom API!');
+app.get(('/'), (req, res) => {
+  res.send('Hello, welcome to the Classroom API!');
 });
 
-app.listen(PORT, () => {
-    console.log(`Serer is running on http://localhost:${PORT}`);
+app.listen((PORT), () => {
+  console.log(`The server is running on http://localhost:${PORT}`);
 });
