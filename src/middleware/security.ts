@@ -3,7 +3,7 @@ import aj from '../config/arcjet';
 import { ArcjetNodeRequest, slidingWindow } from "@arcjet/node";
 
 const securityMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    if (process.env.NODE_ENV === 'test') return next();
+    if (process.env.NODE_ENV === 'test' ) return next();
 
     try {
         const role: RateLimitRole = req.user?.role ?? 'guest';
@@ -12,18 +12,18 @@ const securityMiddleware = async (req: Request, res: Response, next: NextFunctio
 
         switch (role) {
             case 'admin':
-                limit = 2;
+                limit = 1000;
                 message = 'Admin request limit (20 per minute)';
                 break;
 
             case 'teacher':
             case 'student':
-                limit = 10;
+                limit = 1000;
                 message = 'User request limit (10 per minute), please wait.';
                 break;
 
             default:
-                limit = 5;
+                limit = 1000;
                 message = 'Guest request limit (5 per minute), Please sign up for higher limit';
                 break;
         }
@@ -31,7 +31,7 @@ const securityMiddleware = async (req: Request, res: Response, next: NextFunctio
         const client = aj.withRule(
             slidingWindow({
                 mode: 'LIVE',
-                interval: '1m',
+                interval: '20m',
                 max: limit,
             })
         )
