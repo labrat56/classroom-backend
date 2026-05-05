@@ -111,7 +111,7 @@ router.get('/:id', async (req, res) => {
     if(!classDetails) return res.status(404).json({ error: 'No Class found.' });
 
     res.status(200).json({ data: classDetails });
-})
+});
 
 router.post('/', async (req, res) => {
     try {
